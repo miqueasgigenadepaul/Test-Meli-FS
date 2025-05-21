@@ -1,0 +1,46 @@
+.searchBar{
+    display: flex;
+    align-items: center;
+    border: 2px solid white;
+    position: fixed; 
+    width: 100vw;
+    background-color: #FFE600;
+    justify-content: center;
+    padding: 5px;
+}
+
+.logoMeli{
+    background-color: transparent;
+    margin-right: 30px;
+    border: 2px solid #f000
+}
+
+.searchBar input {
+    height:40px;
+    width: 60vw;
+    box-sizing: border-box;
+    color: black;
+}
+
+.icSearchButton {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    background-color: #EEEE;
+    height: 40px;
+    width: 40px;
+    border-radius: 0;
+    border: none;
+}
+
+.icSearchButton:hover{
+    background-color: #9999;
+}
+
+.icSearch{
+    width: 15px;
+    height: 15px;
+    background-color: transparent;
+    
+}

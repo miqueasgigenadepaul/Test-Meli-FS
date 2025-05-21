@@ -72,7 +72,7 @@ app.get('/', async (req, res) => {
       res.status(500).send('Error intercambiando el código de autorización.')
     }
   } else {
-    res.sendFile('Autenticación exitosa. No hay frontend servido desde este backend.')
+    res.sendFile(path.join(__dirname, 'dist/index.html'))
   }
 })
 

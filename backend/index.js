@@ -83,9 +83,16 @@ app.get('/', async (req, res) => {
 
       res.send('✅ Autenticación exitosa. Ya podés usar /api/items?q=...')
     } catch (error) {
-      console.error('Error intercambiando código:', error.response?.data || error.message)
-      res.status(500).send('❌ Error intercambiando el código de autorización.')
-    }
+      console.error('❌ Error intercambiando código:')
+      if (error.response) {
+        console.error('🧾 Status:', error.response.status)
+        console.error('📦 Data:', error.response.data)
+      } else {
+        console.error('❗ Error:', error.message)
+      }
+  res.status(500).send('❌ Error intercambiando el código de autorización.')
+}
+
   } else {
     res.sendFile(path.join(__dirname, 'dist/index.html'))
   }

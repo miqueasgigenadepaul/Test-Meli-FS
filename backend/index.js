@@ -60,17 +60,18 @@ app.get('/', async (req, res) => {
     }
 
     try {
-      const tokenResponse = await axios.post('https://api.mercadolibre.com/oauth/token', null, {
-        params: {
-          grant_type: 'authorization_code',
-          client_id: APP_ID,
-          code,
-          redirect_uri: REDIRECT_URI,
-          code_verifier: codeVerifier
-        },
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-      })
+      const params = new URLSearchParams()
+      params.append('grant_type', 'authorization_code')
+      params.append('client_id', APP_ID)
+      params.append('code', code)
+      params.append('redirect_uri', REDIRECT_URI)
+      params.append('code_verifier', codeVerifier)
 
+    const tokenResponse = await axios.post('https://api.mercadolibre.com/oauth/token', params.toString(), {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }
+})
       accessTokenGlobal = tokenResponse.data.access_token
       refreshTokenGlobal = tokenResponse.data.refresh_token
 
@@ -95,13 +96,15 @@ async function refreshAccessToken() {
   if (!refreshTokenGlobal) throw new Error('No hay refresh token disponible')
 
   try {
-    const response = await axios.post('https://api.mercadolibre.com/oauth/token', null, {
-      params: {
-        grant_type: 'refresh_token',
-        client_id: APP_ID,
-        refresh_token: refreshTokenGlobal
-      },
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    const params = new URLSearchParams()
+    params.append('grant_type', 'refresh_token')
+    params.append('client_id', APP_ID)
+    params.append('refresh_token', refreshTokenGlobal)
+
+    const response = await axios.post('https://api.mercadolibre.com/oauth/token', params.toString(), {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
     })
 
     accessTokenGlobal = response.data.access_token
@@ -115,6 +118,7 @@ async function refreshAccessToken() {
     throw error
   }
 }
+
 
 // Endpoint para probar el refresh manualmente
 app.get('/refresh', async (req, res) => {
